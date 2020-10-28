@@ -1,7 +1,9 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+from mpl_toolkits import mplot3d
 
-# import data
+# Import data
 income = pd.read_excel('Census_median_income_1984_2019.ods', engine='odf',header=[59])
 president = pd.read_csv('1976-2016-president.csv')
 
@@ -36,8 +38,7 @@ median = median.set_index(['year','state'])
 error = error.set_index(['year','state'])
 
 president_income = president_income.reset_index()
-politics = president_income[['year','state','state_po', 'state_fips', 'state_cen', 'state_ic', 'office','candidate', 'party', 'writein', 'candidatevotes', 'totalvotes', 'version',
- 'notes', 'State']].copy()
+politics = president_income[['year','state','office','candidate', 'party', 'writein', 'candidatevotes', 'totalvotes', 'State']].copy()
 
 
 median = median.reset_index()
@@ -47,4 +48,24 @@ error = error.reset_index()
 income_politics_table = politics.merge(median, on=['year','state'], how='outer')
 income_politics_table = income_politics_table.merge(error, on=['year','state'], how='outer')
 
-print(income_politics_table.reset_index()[income_politics_table['year']==2000])
+#income_politics_table.to_excel('Income_vs_Politics.xlsx')
+
+
+
+x = income_politics_table['year']
+z = income_politics_table['party']
+y = income_politics_table['Median Income']
+
+fig, ax = plt.subplots()
+ax.set_title("Median Income over Time")
+ax.set_xlabel("Year")
+ax.set_ylabel("Median Income")
+for states in income_politics_table['state']:
+    ax.plot(x,[i for i in x[states][y]])
+
+
+plt.show()
+
+# fig = plt.figure()
+# ax = plt.axes(projections ='3d')
+
