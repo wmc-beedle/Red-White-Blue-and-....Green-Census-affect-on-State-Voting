@@ -56,30 +56,33 @@ income_politics_table = income_politics_table.merge(error, on=['year','state'], 
 
 ipt = income_politics_table
 
+ipt_c = ipt[ipt['state']=='California']
+ipt_c =ipt_c[ipt_c['year'] >= 1984]
+mi = ipt_c.groupby(['year']).mean()['Median Income']
+
+
+max_v = ipt_c.groupby('year')['candidatevotes'].transform(func=max)
+ipt_c.groupby(['year'])
+
+
+cali_win_party = ipt_c[ipt_c['candidatevotes']==max_v]
+mi_c = cali_win_party.groupby('year').mean()['Median Income']
+cali_mi_win_party = mi_c[mi_c.index >= 1984]
+cali_democrat = cali_win_party[cali_win_party['party'] == 'democrat']
+cdi = cali_democrat['Median Income']
+cali_republican = cali_win_party[cali_win_party['party'] == 'republican']
+cri = cali_republican['Median Income']
+
 fig, ax = plt.subplots()
 ax.set_title("Median Income over Time")
 ax.set_xlabel("Year")
 ax.set_ylabel("Median Income")
 
 
-ipt_c = ipt[ipt['state']=='California']
-
-mi = ipt_c.groupby(['year']).mean()['Median Income']
-
-# win_party = ipt_c.groupby(['year']).max(['candidatevotes'])['candidatevotes']
-# party = ipt_c.groupby(['year']).max(['candidatevotes'])
-# max_v = ipt_c.groupby(['year']).max(['candidatevotes']).transform(func=)
-# print(ipt_c.reindex([ipt_c.groupby('year')['candidatevotes'].idxmax()])['party'])
-# print(ipt_c[ipt_c['candidatevotes']==max_v])
-
-max_v = ipt_c.groupby('year')['candidatevotes'].transform(func=max)
-ipt_c.groupby(['year'])
+ax.scatter(cali_democrat.iloc[:,0],cdi,c='blue',label='democrat')
+ax.scatter(cali_republican.iloc[:,0],cri,c='red',label='republican')
 
 
-# ax.scatter(mi.index,mi, label='California')
-# ax.legend(loc='best')
-# plt.show()
+ax.legend(loc='best')
+plt.show()
 
-
-
-print(ipt_c[ipt_c['candidatevotes']==max_v])
