@@ -38,7 +38,7 @@ median = median.set_index(['year','state'])
 error = error.set_index(['year','state'])
 
 president_income = president_income.reset_index()
-politics = president_income[['year','state','office','candidate', 'party', 'writein', 'candidatevotes', 'totalvotes', 'State']].copy()
+politics = president_income[['year','state','office','candidate', 'party', 'writein', 'candidatevotes', 'totalvotes']].copy()
 
 
 median = median.reset_index()
@@ -48,24 +48,38 @@ error = error.reset_index()
 income_politics_table = politics.merge(median, on=['year','state'], how='outer')
 income_politics_table = income_politics_table.merge(error, on=['year','state'], how='outer')
 
+# state_list = president['state']
+
 #income_politics_table.to_excel('Income_vs_Politics.xlsx')
+# income_politics_table = income_politics_table.reset_index().set_index(['year','state'])
 
 
-
-x = income_politics_table['year']
-z = income_politics_table['party']
-y = income_politics_table['Median Income']
+ipt = income_politics_table
 
 fig, ax = plt.subplots()
 ax.set_title("Median Income over Time")
 ax.set_xlabel("Year")
 ax.set_ylabel("Median Income")
-for states in income_politics_table['state']:
-    ax.plot(x,[i for i in x[states][y]])
 
 
-plt.show()
+ipt_c = ipt[ipt['state']=='California']
 
-# fig = plt.figure()
-# ax = plt.axes(projections ='3d')
+mi = ipt_c.groupby(['year']).mean()['Median Income']
 
+# win_party = ipt_c.groupby(['year']).max(['candidatevotes'])['candidatevotes']
+# party = ipt_c.groupby(['year']).max(['candidatevotes'])
+# max_v = ipt_c.groupby(['year']).max(['candidatevotes']).transform(func=)
+# print(ipt_c.reindex([ipt_c.groupby('year')['candidatevotes'].idxmax()])['party'])
+# print(ipt_c[ipt_c['candidatevotes']==max_v])
+
+max_v = ipt_c.groupby('year')['candidatevotes'].transform(func=max)
+ipt_c.groupby(['year'])
+
+
+# ax.scatter(mi.index,mi, label='California')
+# ax.legend(loc='best')
+# plt.show()
+
+
+
+print(ipt_c[ipt_c['candidatevotes']==max_v])
