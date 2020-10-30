@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import scipy.stats as stats
+import seaborn as sea
 
 
 # Import data
@@ -56,43 +57,38 @@ income_politics_table = income_politics_table.merge(error, on=['year','state'], 
 # cali_mi_win_party = median_income_state[median_income_state.index >= 1984]
 
 ipt = income_politics_table
-p_table = []
+p_value = []
+d_table = []
 fig, ax = plt.subplots()
 
-for state in pd.unique(ipt['state']):
-    #Median Income by State between 1984 and 2016
-    ipt_state = ipt[ipt['state']==state]
-    ipt_state = ipt_state[ipt_state['year'] >= 1984]
-    ipt_state.groupby(['year']).mean()['Median Income']
+max_v = ipt.groupby(['year', 'state'])['candidatevotes'].transform(func=max)
 
-    #Winner Table
-    max_v = ipt_state.groupby('year')['candidatevotes'].transform(func=max)
-    ipt_state.groupby(['year'])
 
-    #Winner of each State
-    state_winning_party = ipt_state[ipt_state['candidatevotes']==max_v]
-    median_income_state = state_winning_party.groupby('year').mean()['Median Income']
+state_winning_party = ipt[ipt['candidatevotes']==max_v]
 
-    #Political Party Plotting
-    democrat = state_winning_party[state_winning_party['party'] == 'democrat']
-    democrat_median_income = democrat['Median Income']
-    republican = state_winning_party[state_winning_party['party'] == 'republican']
-    republican_median_income = republican['Median Income']
 
-    # #Creating list to check if the sample distribution are not normally distributed to see if there was significant differnce   
-    p_table.append(stats.mannwhitneyu(democrat_median_income,republican_median_income))
+median_income_state = state_winning_party.groupby('year').mean()['Median Income']
+democrat = state_winning_party[state_winning_party['party'] == 'democrat']
+democrat_median_income = democrat['Median Income']
+republican = state_winning_party[state_winning_party['party'] == 'republican']
+republican_median_income = republican['Median Income']
+
+p_value = stats.mannwhitneyu(democrat_median_income,republican_median_income)
+
     
+# Scatterplot of Data
+ax.scatter(democrat.iloc[:,0],democrat_median_income,c='blue')
+ax.scatter(republican.iloc[:,0],republican_median_income,c='red')
 
-    ax.scatter(democrat.iloc[:,0],democrat_median_income,c='blue')
-    ax.scatter(republican.iloc[:,0],republican_median_income,c='red')
+# Regression Lines
+sea.regplot(democrat.iloc[:,0],democrat_median_income, color='blue')
+sea.regplot(republican.iloc[:,0],republican_median_income, color='red')
 
-
-
-
+# Scatterplot legend
 red_patch = mpatches.Patch(color='red', label='Republican Won State')
 blue_patch = mpatches.Patch(color='blue', label='Democrat Won State')
-
 plt.legend(handles=[red_patch, blue_patch], loc='best')
+
 
 ax.set_title("States' Political Preference over Time compared to Median Household Income")
 ax.set_xlabel("Year")
