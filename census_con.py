@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
+import scipy.stats as stats
 
 
 # Import data
@@ -55,6 +56,7 @@ income_politics_table = income_politics_table.merge(error, on=['year','state'], 
 # cali_mi_win_party = median_income_state[median_income_state.index >= 1984]
 
 ipt = income_politics_table
+p_table = []
 fig, ax = plt.subplots()
 
 for state in pd.unique(ipt['state']):
@@ -77,8 +79,13 @@ for state in pd.unique(ipt['state']):
     republican = state_winning_party[state_winning_party['party'] == 'republican']
     republican_median_income = republican['Median Income']
 
+    # #Creating list to check if the sample distribution are not normally distributed to see if there was significant differnce   
+    p_table.append(stats.mannwhitneyu(democrat_median_income,republican_median_income))
+    
+
     ax.scatter(democrat.iloc[:,0],democrat_median_income,c='blue')
     ax.scatter(republican.iloc[:,0],republican_median_income,c='red')
+
 
 
 
@@ -90,5 +97,8 @@ plt.legend(handles=[red_patch, blue_patch], loc='best')
 ax.set_title("States' Political Preference over Time compared to Median Household Income")
 ax.set_xlabel("Year")
 ax.set_ylabel("Median Income")
+
+
 plt.show()
+
 
