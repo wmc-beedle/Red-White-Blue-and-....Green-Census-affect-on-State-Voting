@@ -1,4 +1,4 @@
-# Median-Income_v_State-Vote
+# Red, White, Blue, and ....Green? Census affect on State Voting
 
 ### Data comes from [US Census](https://www.census.gov/topics/income-poverty/income/data/tables.1950.html) and [Harvard Dataverse](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/42MVDX)
 
