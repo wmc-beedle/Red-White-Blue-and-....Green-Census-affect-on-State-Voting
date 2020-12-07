@@ -76,18 +76,18 @@ republican_median_income = republican['Median Income']
 p_value = stats.mannwhitneyu(democrat_median_income,republican_median_income)
 
     
-# Scatterplot of Data
-ax.scatter(democrat.iloc[:,0],democrat_median_income,c='blue')
-ax.scatter(republican.iloc[:,0],republican_median_income,c='red')
+# # Scatterplot of Data
+# ax.scatter(democrat.iloc[:,0],democrat_median_income,c='blue')
+# ax.scatter(republican.iloc[:,0],republican_median_income,c='red')
 
-# Regression Lines
-sea.regplot(democrat.iloc[:,0],democrat_median_income, color='blue')
-sea.regplot(republican.iloc[:,0],republican_median_income, color='red')
+# # Regression Lines
+# sea.regplot(democrat.iloc[:,0],democrat_median_income, color='blue')
+# sea.regplot(republican.iloc[:,0],republican_median_income, color='red')
 
-# Scatterplot legend
-red_patch = mpatches.Patch(color='red', label='Republican Won State')
-blue_patch = mpatches.Patch(color='blue', label='Democrat Won State')
-plt.legend(handles=[red_patch, blue_patch], loc='best')
+# # Scatterplot legend
+# red_patch = mpatches.Patch(color='red', label='Republican Won State')
+# blue_patch = mpatches.Patch(color='blue', label='Democrat Won State')
+# plt.legend(handles=[red_patch, blue_patch], loc='best')
 
 
 ax.set_title("States' Political Preference over Time compared to Median Household Income")
