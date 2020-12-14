@@ -5,12 +5,9 @@
 
 ## Overview
 ---
-This project was attempting to see and understand if there was any relationship between a state's median household income changes over time and affects how that state may vote in the upcoming election.
+This project was attempting to try to understand any relationship between a state's median household income changes over time and how that affects how that state may vote in the upcoming election.
 
-## Hypothesis Testing
-* Null Hypothesis is that there is no relationship between median household income and a state's vote in the presidential election
-* Alternative Hypothesis is that there is a relationship between median and household income and a state's vote in the presidential election
-* p-value is $a$ = 0.05 as there was not another convincing reason otherwise beyond the standard
+
 
 ### Caveats:
 * This data turned out to not be I.I.D. due to previous elections informing and affecting upcoming elections
