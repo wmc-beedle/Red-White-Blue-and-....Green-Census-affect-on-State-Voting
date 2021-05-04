@@ -1,4 +1,4 @@
-#_This project in the process of being created again from scratch. Link will be provided when finished_
+# _This project in the process of being created again from scratch. Link will be provided when finished_
 
 # Red, White, Blue, and ....Green? Census affect on State Voting
 
