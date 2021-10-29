@@ -1,5 +1,3 @@
-# _This project in the process of being created again from scratch. Link will be provided when finished_
-
 # Red, White, Blue, and ....Green? Census affect on State Voting
 
 ### Data comes from [US Census](https://www.census.gov/topics/income-poverty/income/data/tables.1950.html) and [Harvard Dataverse](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/42MVDX)
